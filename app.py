@@ -17,9 +17,13 @@ region = pd.read_csv(r"C:\Users\sathw\Downloads\archive (12)\noc_regions.csv")
 df = preprocessor.preprocess(df,region)
 
 st.sidebar.title("Olympics Analysis")
+st.sidebar.image(r"C:\Users\sathw\Downloads\olympic_rings.png")
+
+
+st.sidebar.title("Olympics Analysis")
 user_menu = st.sidebar.radio(
     'Select an Option',
-    ('Medal Tally','Overall Analysis','Country-Wise Analysis',"Athlete Wise Analysis")
+    ('Medal Tally','Overall Analysis','Country-Wise Analysis')
 )
 
 if user_menu == 'Medal Tally':
@@ -123,16 +127,3 @@ if user_menu == "Country-Wise Analysis":
     st.title("Top 10 countries"+" "+ selected_country)
     top10_df = helper.most_successful_countrywise(df,selected_country)
     st.table(top10_df)
-
-if user_menu == "Athlete Wise Analysis":
-    athlete_df = df.drop_duplicates(subset=["Name", "region"])
-    x1 = athlete_df['Age'].dropna()
-    x2 = athlete_df[athlete_df['Medal'] == 'Gold']["Age"].dropna()
-    x3 = athlete_df[athlete_df['Medal'] == 'Silver']["Age"].dropna()
-    x4 = athlete_df[athlete_df['Medal'] == 'Bronze']["Age"].dropna()
-    fig = ff.create_distplot([x1, x2, x3, x4], ['overall Age', "Gold Medalist", "Silver Medalist", "Bronze Medalist"],
-                             show_hist=False, show_rug=False)
-
-    st.title("Distribution of Age")
-    fig.update_layout(autosize=True, height=1000, width=600)
-    st.plotly_chart(fig)
